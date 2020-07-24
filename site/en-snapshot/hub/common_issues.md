@@ -12,10 +12,10 @@ embed = hub.load('https://tfhub.dev/google/nnlm-en-dim128/1')
 embed(['my text', 'batch'])
 ```
 
-This error frequently arises when loading TF1 hub.Modules with the `hub.load()`
-API in TF2. Adding the correct signature should fix this problem. See the
-[TF-Hub migration guide for TF2](migration_tf2.md) for more details on moving to
-TF2 and the use of TF1 hub.Modules in TF2.
+This error frequently arises when loading models in TF1 Hub format with the
+`hub.load()` API in TF2. Adding the correct signature should fix this problem.
+See the [TF-Hub migration guide for TF2](migration_tf2.md) for more details on
+moving to TF2 and the use of models in TF1 Hub format in TF2.
 
 ```python
 
@@ -41,6 +41,9 @@ ones:
     Before .dev was used as a gTLD, developers and frameworks would sometimes
     use .dev names to help testing code. **FIX:** Identify and reconfigure the
     software that intercepts name resolution in the ".dev" domain.
+
+*   Failures to write to the cache directory `/tmp/tfhub_modules` (or similar):
+    see [Caching](caching.md) for what that is and how to change its location.
 
 If the above errors and fixes do not work, one can try to manually download a
 module by simulating the protocol of attaching `?tf-hub-format=compressed` to
@@ -123,7 +126,7 @@ session.run(init_op)
 result = session.run(embedded_text, feed_dict={text_input: ["Hello world"]})
 ```
 
-## Cannot change a model's dype (e.g., float32 to bfloat16)
+## Cannot change a model's dtype (e.g., float32 to bfloat16)
 
 TensorFlow's SavedModels (shared on TF Hub or otherwise) contain
 operations that work on fixed data types (often, float32 for the weights

@@ -257,9 +257,10 @@ is a hosted notebook environment that makes it easy to edit—and run—notebook
 documentation. Notebooks in GitHub are loaded in Google Colab by passing the
 path to the Colab URL, for example,
 the notebook located in GitHub here:
-<a href="https://   &#103;ithub.com/tensorflow/docs/blob/master/site/en/tutorials/keras/classification.ipynb">https://  &#103;ithub.com/tensorflow/docs/blob/master/site/en/tutorials/keras/classification.ipynb</a><br/>
+<a href="https://&#103;ithub.com/tensorflow/docs/blob/master/site/en/tutorials/keras/classification.ipynb">https://&#103;ithub.com/tensorflow/docs/blob/master/site/en/tutorials/keras/classification.ipynb</a><br/>
 can be loaded into Google Colab at this URL:
 <a href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/keras/classification.ipynb">https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/keras/classification.ipynb</a>
+<!-- github.com path intentionally formatted to hide from import script. -->
 
 There is an
 <a href="https://chrome.google.com/webstore/detail/open-in-colab/iogfkhleblhcpcekbiedikdehleodpjo" class="external">Open in Colab</a>
@@ -277,16 +278,17 @@ Notebooks are stored on disk as JSON and the various notebook implementations
 format the JSON differently. Diff tools and version control don't handle this
 very well, so TensorFlow Docs enforces a standard notebook formatting.
 
-The
-[nbfmt.py](https://github.com/tensorflow/docs/blob/master/tools/nbfmt.py)
-script applies this formatting:
+Use the `nbfmt` command to apply this formattng:
 
 ```
-# Run it on a single file
-python nbfmt.py path/to/notebooks/example.ipynb
+# Install the tensorflow-docs package:
+$ python3 -m pip install -U [--user] git+https://github.com/tensorflow/docs
 
-# Run  it on a whole directory
-python nbfmt.py path/to/notebooks/
+# Format individual notebooks:
+$ python3 -m tensorflow_docs.tools.nbfmt ./path/to/notebook.ipynb [...]
+
+# Or a directory of notebooks:
+$ python3 -m tensorflow_docs.tools.nbfmt ./path/to/notebooks/
 ```
 
 For the same reasons notebook output should be cleared before submission
@@ -295,7 +297,8 @@ to enforce this. Other notebook implementations do not recognize this option.
 You can clear the outputs by passing `--preserve_outputs=False` to `nbfmt`:
 
 ```
-python nbfmt.py --preserve_outputs=False path/to/notebooks/example.ipynb
+$ python3 -m tensorflow_docs.tools.nbfmt --preserve_outputs=False \
+    path/to/notebooks/example.ipynb
 ```
 
 ### Edit in Colab
@@ -385,7 +388,7 @@ tool for the translated notebooks:
 <code class="devsite-terminal">./tools/nb_code_sync.py [--lang=en] site/<var>lang</var>/notebook.ipynb</code>
 </pre>
 
-This script reads the code cells of a language notebook and check it against the
+This script reads the code cells of a language notebook and checks it against the
 English version. After stripping the comments, it compares the code blocks and
 updates the language notebook if they are different. This tool is particularly
 useful with an interactive git workflow to selectively add hunks of the file to
